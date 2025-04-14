@@ -1,14 +1,11 @@
-This is a Kotlin Multiplatform project targeting Android, iOS.
+This is a Compose Multiplatform application that demonstrates an odd state saving/management issue. Reproducing is very simple:
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+. Build and run the application
+. On the only screen in the application, note the values of the fields:
+.. The `Foo` combobox/spinner is set to `Foo 1`
+.. The child combos are `1`, `2`, and `3`.
+. If you change `Foo` to `Foo 2`, the child values do not change
+.. The values should be `4`, `5`, and `6`.
+. If you uncomment line 83 in `RootContent.kt` and rerun the application, you will see the child components' values update as expected.
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
-
-
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+My question is *why* is this necessary? In the application from which I distilled this example, I have similar parent/child setups that don't need the key. Is it related to `LazyColumn`? Am I missing something subtle elsewhere?
